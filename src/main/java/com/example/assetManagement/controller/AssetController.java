@@ -2,6 +2,7 @@ package com.example.assetManagement.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.example.assetManagement.model.Asset;
 import com.example.assetManagement.service.AssetService;
@@ -27,13 +28,13 @@ public class AssetController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Asset> getAssetById(@PathVariable Long id) {
+	public ResponseEntity<Asset> getAssetById(@PathVariable UUID id) {
 		Optional<Asset> asset = assetService.getAssetById(id);
 		return asset.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	
 	@PutMapping("/{id}")
-    public ResponseEntity<Asset> updateAsset(@PathVariable Long id, @RequestBody Asset assetDetails) {
+    public ResponseEntity<Asset> updateAsset(@PathVariable UUID id, @RequestBody Asset assetDetails) {
         Optional<Asset> asset = assetService.getAssetById(id);
         if (asset.isPresent()) {
             Asset updatedAsset = asset.get();
@@ -50,7 +51,7 @@ public class AssetController {
     }
 	
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAsset(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAsset(@PathVariable UUID id) {
         if (assetService.getAssetById(id).isPresent()) {
             assetService.deleteAsset(id);
             return ResponseEntity.ok().build();

@@ -6,24 +6,25 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "asset_inventory")
 public class Asset {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 	private String name;
 	private String type;
 	private Date purchaseDate;
 	private String location;
 	private String status;
 	private Double value;
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -62,7 +63,7 @@ public class Asset {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-	public Asset(Long id, String name, String type, Date purchaseDate, String location, String status, Double value) {
+	public Asset(UUID id, String name, String type, Date purchaseDate, String location, String status, Double value) {
 		super();
 		this.id = id;
 		this.name = name;
