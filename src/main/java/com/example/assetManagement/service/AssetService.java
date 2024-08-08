@@ -2,6 +2,7 @@ package com.example.assetManagement.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,11 @@ public class AssetService {
 		return assetRepository.findAll();
 	}
 	
-	public Optional<Asset> getAssetById(Long id) {
+	public Optional<Asset> getAssetById(UUID id) {
 		return assetRepository.findById(id);
 	}
 	
-	public void deleteAsset(long id) {
+	public void deleteAsset(UUID id) {
 		assetRepository.deleteById(id);
 	}
 	
