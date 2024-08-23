@@ -1,9 +1,6 @@
 package com.example.assetManagement.controller;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
+import java.util.*;
 import com.example.assetManagement.model.Asset;
 import com.example.assetManagement.service.AssetService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class AssetController {
 
 	@Autowired
-	private AssetService assetService;
+	private final AssetService assetService;
+
+    public AssetController(AssetService assetService) {
+        this.assetService = assetService;
+    }
 	
 	@PostMapping
 	public Asset createAsset(@RequestBody Asset asset) {
