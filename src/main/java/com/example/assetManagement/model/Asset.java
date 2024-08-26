@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -13,75 +12,56 @@ import java.util.UUID;
 public class Asset {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
-	private String name;
-	private String type;
-	private Date purchaseDate;
-	private String location;
-	private String status;
-	private Double value;
-	public UUID getId() {
-		return id;
-	}
-	public void setId(UUID id) {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private String type;
+    private String status;
+
+    // Default constructor
+    public Asset() {
+    }
+
+    // Parameterized constructor
+    public Asset(String type, String status) {
+        this.type = type;
+        this.status = status;
+    }
+
+    // Getters and Setters
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+	public Asset(UUID id, String type, String status) {
 		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
 		this.type = type;
-	}
-	public Date getPurchaseDate() {
-		return purchaseDate;
-	}
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Double getValue() {
-		return value;
-	}
-	public void setValue(Double value) {
-		this.value = value;
-	}
-	public Asset(UUID id, String name, String type, Date purchaseDate, String location, String status, Double value) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.type = type;
-		this.purchaseDate = purchaseDate;
-		this.location = location;
-		this.status = status;
-		this.value = value;
-	}
-	public Asset() {
-		super();
-	}
+
 	@Override
 	public String toString() {
-		return "Asset [id=" + id + ", name=" + name + ", type=" + type + ", purchaseDate=" + purchaseDate
-				+ ", location=" + location + ", status=" + status + ", value=" + value + "]";
+		return "Asset [id=" + id + ", type=" + type + ", status=" + status + "]";
 	}
 	
-	// getters and setters
 
 }

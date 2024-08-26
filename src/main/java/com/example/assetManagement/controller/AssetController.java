@@ -1,11 +1,12 @@
 package com.example.assetManagement.controller;
 
 import java.util.*;
+
+import com.example.assetManagement.dto.AssetStatusCountsDTO;
 import com.example.assetManagement.model.Asset;
 import com.example.assetManagement.service.AssetService;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,58 +14,37 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AssetController {
 
-	@Autowired
-	private final AssetService assetService;
+	 @Autowired
+    private AssetService assetService;
 
-    public AssetController(AssetService assetService) {
-        this.assetService = assetService;
+    @GetMapping
+    public List<Asset> getAllAssets(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size) {
+        return assetService.getAllAssets(page, size);
     }
-	
-	@PostMapping
-	public Asset createAsset(@RequestBody Asset asset) {
-		return assetService.saveAsset(asset);
-	}
-	
-	@GetMapping
-	public List<Asset> getAllAsset() {
-		return assetService.getAllAssets();
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Asset> getAssetById(@PathVariable UUID id) {
-		Optional<Asset> asset = assetService.getAssetById(id);
-		return asset.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-	}
-	
-	@PutMapping("/{id}")
-    public ResponseEntity<Asset> updateAsset(@PathVariable UUID id, @RequestBody Asset assetDetails) {
-        Optional<Asset> asset = assetService.getAssetById(id);
-        if (asset.isPresent()) {
-            Asset updatedAsset = asset.get();
-            updatedAsset.setName(assetDetails.getName());
-            updatedAsset.setType(assetDetails.getType());
-            updatedAsset.setPurchaseDate(assetDetails.getPurchaseDate());
-            updatedAsset.setLocation(assetDetails.getLocation());
-            updatedAsset.setStatus(assetDetails.getStatus());
-            updatedAsset.setValue(assetDetails.getValue());
-            return ResponseEntity.ok(assetService.saveAsset(updatedAsset));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
+    @GetMapping("/{id}")
+    public Asset getAssetById(@PathVariable UUID id) {
+        return assetService.getAssetById(id);
     }
-	
+
+    @PostMapping
+    public Asset createAsset(@RequestBody Asset asset) {
+        return assetService.createAsset(asset);
+    }
+
+    @PutMapping("/{id}")
+    public Asset updateAsset(@PathVariable UUID id, @RequestBody Asset assetDetails) {
+        return assetService.updateAsset(id, assetDetails);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAsset(@PathVariable UUID id) {
-        if (assetService.getAssetById(id).isPresent()) {
-            assetService.deleteAsset(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public void deleteAsset(@PathVariable UUID id) {
+        assetService.deleteAsset(id);
     }
-	
-    @GetMapping("/count")
-    public long getTotalAssets() {
-        return assetService.getTotalAssets();
+
+    @GetMapping("/counts")
+    public AssetStatusCountsDTO getAssetCounts() {
+        return assetService.getAssetStatusCounts();
     }
 }
