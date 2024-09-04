@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.assetManagement.dto.AssetStatusCountsDTO;
@@ -17,8 +17,8 @@ public class AssetService {
 	@Autowired
     private AssetRepository assetRepository;
 
-    public List<Asset> getAllAssets(int page, int size) {
-        return assetRepository.findAll(PageRequest.of(page, size)).getContent();
+    public List<Asset> getAllAssets(Pageable pageable) {
+        return assetRepository.findAll(pageable).getContent();
     }
 
     public Asset getAssetById(UUID id) {

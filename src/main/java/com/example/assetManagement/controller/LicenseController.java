@@ -26,7 +26,7 @@ public class LicenseController {
 
     @GetMapping
     public Page<License> getLicenses(@RequestParam(defaultValue = "0") int page,
-                                     @RequestParam(defaultValue = "10") int size) {
+                                     @RequestParam(defaultValue = "100") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return licenseService.getLicenses(pageable);
     }
